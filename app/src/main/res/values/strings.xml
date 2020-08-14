@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">HelloJuaraCoding</string>
+    <string name="username">Username</string>
+    <string name="username1">Masukan Username</string>
+    <string name="password">Password</string>
+    <string name="password1">Masukan Password</string>
+    <string name="login">Login</string>
+    <string name="welcome">Welcome</string>
+    <string name="add_data">Add Data</string>
+    <string name="list_data">List Data</string>
+    <string name="about_us">About Us</string>
+    <string name="exit">Exit</string>
+    <string name="nama">Nama</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="alamat">Alamat</string>
+    <string name="no_telpon">Telpon</string>
+    <string name="email">Email</string>
+    <string name="jk">Jenis Kelamin</string>
+    <string name="laki">Laki-Laki</string>
+    <string name="perempuan">Perempuan</string>
+    <string name="pekerjaan">Pekerjaan</string>
+    <string name="catatan">Catatan</string>
+    <string name="simpan">Simpan</string>
+    <string name="batal">Batal</string>
+
+</resources>
