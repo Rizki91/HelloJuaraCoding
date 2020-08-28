@@ -1,13 +1,48 @@
 package com.example.hellojuaracoding.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+@Entity(tableName = "Biodata")
 public class Biodata {
 
-    private  String nama;
-    private  String jk;
-    private  String pekerjaan;
-    private  String tgl_lahir;
-    private  String alamat;
-    private  String tlp;
+    @ColumnInfo(name = "nama")
+    private    String nama;
+    @ColumnInfo (name = "jk")
+    private    String jk;
+    @ColumnInfo (name = "pekerjaan")
+    private    String pekerjaan;
+
+    @ColumnInfo (name = " tgl_lahir")
+    private    String tgl_lahir;
+    @ColumnInfo (name = "alamat")
+    private   String alamat;
+    @ColumnInfo (name = "email")
+    private  String email;
+    @ColumnInfo (name = "catatan")
+    private  String catatan;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "tlp")
+    private    String tlp;
+    private  String key;
+
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+
 
     public String getNama() {
         return nama;
@@ -49,6 +84,7 @@ public class Biodata {
         this.alamat = alamat;
     }
 
+    @NonNull
     public String getTlp() {
         return tlp;
     }
@@ -73,7 +109,6 @@ public class Biodata {
         this.catatan = catatan;
     }
 
-    private  String email;
-    private  String catatan;
+
 
 }

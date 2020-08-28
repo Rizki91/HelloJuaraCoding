@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainMenu extends AppCompatActivity {
 
     String username,password;
     TextView txtUsername;
-    ImageView btnTambahData,btnExit;
+    ImageView btnTambahData,btnKeluar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,8 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         txtUsername = findViewById(R.id.txtUsername);
         btnTambahData = findViewById(R.id.btnTambahData);
-        btnExit = findViewById(R.id.btnExit);
+        btnKeluar = findViewById(R.id.btnExit);
+        mAuth = FirebaseAuth.getInstance();
 
 
         username = getIntent().getStringExtra("username");
@@ -30,17 +34,24 @@ public class MainMenu extends AppCompatActivity {
         txtUsername.setText(username);
 
 
-        btnExit.setOnClickListener(new View.OnClickListener() {
+        btnKeluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                mAuth.signOut();
+                if (mAuth.getCurrentUser() == null);
+                {
+                    startActivity( new Intent(MainMenu.this, MainActivity.class));
+                    finish();
+                }
             }
         });
 
     }
 
+
+
     public  void tambah (View view){
-        Intent in = new Intent(MainMenu.this,TambahData.class);
+        Intent in = new Intent(MainMenu.this,TambahDataSqlite .class);
         startActivity(in);
 
     }
@@ -48,4 +59,6 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = new Intent(MainMenu.this, ListBiodata.class);
         startActivity(intent);
     }
+
+
 }

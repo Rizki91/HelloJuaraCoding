@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "22642659625",
+    "firebase_url": "https://hellojuaracoding.firebaseio.com",
+    "project_id": "hellojuaracoding",
+    "storage_bucket": "hellojuaracoding.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22642659625:android:42f966abbb6904b0f96738",
+        "android_client_info": {
+          "package_name": "com.example.hellojuaracoding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22642659625-a9aja3pusiud259pcljh9i35jb1ju2te.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hellojuaracoding",
+            "certificate_hash": "fd0100f2af06762a818fba1c925150cf048a64b4"
+          }
+        },
+        {
+          "client_id": "22642659625-7pqblge2okhp7kvcqf98uulrsihuncgi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOel2Z3lwK9mSRWJDCXlM-J74vRwNijWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22642659625-7pqblge2okhp7kvcqf98uulrsihuncgi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
