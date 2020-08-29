@@ -1,6 +1,7 @@
 package com.example.hellojuaracoding;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,10 +22,12 @@ import com.example.hellojuaracoding.model.Biodata;
 import com.example.hellojuaracoding.utility.SharedPrefUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -146,7 +149,7 @@ public class ListBiodata extends AppCompatActivity implements AdapterListBasic.O
 
                     Biodata bdt = snapshot.getValue(Biodata.class);
 
-                    bdt.setKey(snapshot.getKey());
+                    bdt.setTlp(snapshot.getKey());
                     biodata.add(bdt);
                 }
 
@@ -181,82 +184,24 @@ public class ListBiodata extends AppCompatActivity implements AdapterListBasic.O
 //        v.setImageResource(R.drawable.ic_close);
 //        lstBiodata.invalidate();
 
-        if(mDatabase != null){
+        if (mDatabase != null) {
             String userID = mAuth.getUid();
             mDatabase.child("Biodata")
                     .child(userID)
                     .child("Data")
-                    .child(obj.getKey())
+                    .child(obj.getTlp())
                     .removeValue()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(ListBiodata. this, "Data Berhasil Hapus", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListBiodata.this, "Data Berhasil Hapus", Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else {
+        } else {
             Toast.makeText(ListBiodata.this, "Data gagal dihapus", Toast.LENGTH_SHORT).show();
         }
 
-
-
-
-//        CharSequence [] menupilih = {"Edit", "Delet"};
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext())
-//                .setTitle("Pilih Aksi")
-//                .setItems(menupilih, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which){
-//                            case 0 :
-//
-//
-//                                break;
-//
-//                            case  1 :
-//
-//                                mDb.biodataDao().deleteBiodata(biodata.);
-//                                biodata.remove(position);
-//
-//
-//                                if(mDatabase != null){
-//                                    mDatabase.child("Biodata")
-//                                            .child("Data")
-//                                            .child(obj.getKey())
-//                                            .removeValue()
-//                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                @Override
-//                                                public void onSuccess(Void aVoid) {
-//
-//                                                    Toast.makeText(ListBiodata. this, "Data Berhasil Hapus", Toast.LENGTH_SHORT).show();
-//                                                }
-//                                            });
-//                                }else {
-//                                    Toast.makeText(ListBiodata.this, "Data gagal dihapus", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//
-//                                break;
-//                        }
-//                    }
-//                });
-//        dialog.create();
-//        dialog.show();
-
-
     }
-
-//    @Override
-//    public void onItemClick(Biodata biodata, int position) {
-//
-//
-//    }
-
-//    @Override
-//    public void OnDeletData(Biodata biodata, int position) {
-//
-//
-//    }
 
 
 }

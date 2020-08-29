@@ -216,7 +216,7 @@ public class TambahDataSqlite extends AppCompatActivity {
                       mDb.biodataDao().insertAll(generateObjectData());
 
                       String getUserID = mAuth.getCurrentUser().getUid();
-                      mDatabase.child("Biodata").child(getUserID).child("Data").push().setValue(generateObjectData());
+                      mDatabase.child("Biodata").child(getUserID).child("Data").child(generateObjectData().getTlp()).setValue(generateObjectData());
 
 //                      updateBiodata(generateObjectData());
 
@@ -239,7 +239,9 @@ public class TambahDataSqlite extends AppCompatActivity {
         }
     }
 
+
     public  Biodata generateObjectData(){
+
 
         Biodata biodata = new Biodata();
         biodata.setNama(txtNama.getText().toString());
@@ -264,6 +266,8 @@ public class TambahDataSqlite extends AppCompatActivity {
         return  biodata;
 
     }
+
+
 
     public void showErrorDialog(){
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(TambahDataSqlite.this);
@@ -311,13 +315,6 @@ public class TambahDataSqlite extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 finish();
-
-
-            }
-        }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(TambahDataSqlite.this,"Cancel ditekan",Toast.LENGTH_LONG).show();
 
             }
         });

@@ -27,6 +27,7 @@ import com.example.hellojuaracoding.ListBiodata;
 import com.example.hellojuaracoding.R;
 import com.example.hellojuaracoding.TambahDataSqlite;
 import com.example.hellojuaracoding.model.Biodata;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,9 +46,12 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
 
     int gambar [] = {R.drawable.ic_about, R.drawable.ic_checklist};
+
+
 
     public AdapterListBasic() {
 
@@ -94,6 +98,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
+
         public OriginalViewHolder(View v) {
             super(v);
 
@@ -125,7 +130,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
     // Replace the contents of a view (invoked by the layout manager)
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
 
 
@@ -159,21 +164,24 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 switch (which) {
                                     case 0:
 
-
-
-
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("dataNama", items.get(position).getNama());
-                                        bundle.putString("dataJk", items.get(position).getJk());
-                                        bundle.putString("dataPekerjaan", items.get(position).getPekerjaan());
-                                        bundle.putString("dataTanggal", items.get(position).getTgl_lahir());
-                                        bundle.putString("dataAlamat", items.get(position).getAlamat());
-                                        bundle.putString("dataEmail", items.get(position).getEmail());
-                                        bundle.putString("dataCatatan", items.get(position).getCatatan());
-                                        bundle.putString("getPrimaryKey", items.get(position).getKey());
+                                        bundle.putString("flag",items.get(position).getKey());
+                                        bundle.putString("nama", items.get(position).getNama());
+                                        bundle.putString("jenis_kelamin", items.get(position).getJk());
+                                        bundle.putString("pekerjaan", items.get(position).getPekerjaan());
+                                        bundle.putString("tanggal_lahir", items.get(position).getTgl_lahir());
+                                        bundle.putString("alamat", items.get(position).getAlamat());
+                                        bundle.putString("telepon", items.get(position).getTlp());
+                                        bundle.putString("email", items.get(position).getEmail());
+                                        bundle.putString("catatan", items.get(position).getCatatan());
+
+//                                        bundle.putString("getPrimaryKey", items.get(position).getKey());
                                         Intent intent = new Intent(view.getContext(), EditData.class);
                                         intent.putExtras(bundle);
                                         ctx.startActivity(intent);
+//                                        OnEdit(position,ctx);
+
+
 
 
                                         break;
@@ -228,6 +236,11 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
 //        daftarBarang.remove(position);
 //        notifyItemRemoved(position);
 //        notifyItemRangeRemoved(position, daftarBarang.size());
+//    }
+
+//    private  void OnEdit(int position, Context ctx){
+//        ctx.startActivity(new Intent(ctx,EditData.class).putExtra("data", position));
+//        ((Activity)ctx).finish();
 //    }
 
 
