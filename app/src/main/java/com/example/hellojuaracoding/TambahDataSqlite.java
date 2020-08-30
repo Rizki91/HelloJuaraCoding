@@ -47,7 +47,7 @@ public class TambahDataSqlite extends AppCompatActivity {
     TextView tvDateReselut;
     RadioButton rbPria,rbWanita;
     Spinner spnPekerjaan;
-    CalendarView CalendarLahir;
+    CalendarView calendarLahir;
     EditText txtAlamat,txtTelepon, txtEmail,txtCatatan;
     Button btnSimpan, btnBatal,btnTgl;
     String tanggal="";
@@ -66,7 +66,7 @@ public class TambahDataSqlite extends AppCompatActivity {
         rbPria = findViewById(R.id.rbLaki);
         rbWanita = findViewById(R.id.rbPerempuan);
         spnPekerjaan = findViewById(R.id.spnPekerjaan);
-        CalendarLahir = findViewById(R.id.txtCalender);
+        calendarLahir = findViewById(R.id.txtCalender);
         txtAlamat = findViewById(R.id.txtalamat);
         txtTelepon = findViewById(R.id.txtTelpon);
         txtEmail = findViewById(R.id.txtEmail);
@@ -87,7 +87,7 @@ public class TambahDataSqlite extends AppCompatActivity {
         mDb = AppDatabase.getInstance(getApplicationContext());
 
 
-        CalendarLahir.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarLahir.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -165,7 +165,7 @@ public class TambahDataSqlite extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        CalendarLahir.setDate(dateDummy.getTime());
+        calendarLahir.setDate(dateDummy.getTime());
 
 
 
