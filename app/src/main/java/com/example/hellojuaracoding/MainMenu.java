@@ -16,6 +16,8 @@ public class MainMenu extends AppCompatActivity {
     TextView txtUsername;
     ImageView btnTambahData,btnKeluar;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = new Intent(MainMenu.this, ListBiodata.class);
         startActivity(intent);
     }
+
+
 
 
 }

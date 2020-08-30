@@ -23,5 +23,7 @@
     <string name="simpan">Simpan</string>
     <string name="batal">Batal</string>
     <string name="daftar">Daftar</string>
+    <string name="hapus">Hapus</string>
+    <string name="edit">Edit</string>
 
 </resources>

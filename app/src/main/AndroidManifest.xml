@@ -16,7 +16,6 @@
         <activity android:name=".Testing" />
         <activity android:name=".ListBiodata" />
         <activity android:name=".TambahData" />
-        <activity android:name=".TambahDataFirebase" />
         <activity android:name=".TambahDataSqlite" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MainMenu" />

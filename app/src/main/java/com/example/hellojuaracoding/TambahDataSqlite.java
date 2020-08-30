@@ -1,6 +1,7 @@
 package com.example.hellojuaracoding;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,9 +12,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,25 +37,31 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TambahDataSqlite extends AppCompatActivity {
     EditText txtNama;
+    TextView tvDateReselut;
     RadioButton rbPria,rbWanita;
     Spinner spnPekerjaan;
     CalendarView calendarLahir;
     EditText txtAlamat,txtTelepon, txtEmail,txtCatatan;
-    Button btnSimpan, btnBatal;
+    Button btnSimpan, btnBatal,btnTgl;
     String tanggal="";
     private AppDatabase mDb;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_data);
+
         txtNama = findViewById(R.id.txtNama);
         rbPria = findViewById(R.id.rbLaki);
         rbWanita = findViewById(R.id.rbPerempuan);
@@ -62,6 +71,7 @@ public class TambahDataSqlite extends AppCompatActivity {
         txtTelepon = findViewById(R.id.txtTelpon);
         txtEmail = findViewById(R.id.txtEmail);
         txtCatatan = findViewById(R.id.txtCatatan);
+
 
         btnBatal = findViewById(R.id.btnBatal);
         btnSimpan = findViewById(R.id.btnSimpan);
@@ -74,14 +84,12 @@ public class TambahDataSqlite extends AppCompatActivity {
             }
         });
 
-
         mDb = AppDatabase.getInstance(getApplicationContext());
 
 
         calendarLahir.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
                 Date date = new Date(year-1900,month,dayOfMonth);
                 tanggal= sdf.format(date);
@@ -150,6 +158,7 @@ public class TambahDataSqlite extends AppCompatActivity {
         txtEmail.setText(biodata.getEmail());
         txtCatatan.setText(biodata.getCatatan());
 
+
         Date dateDummy = null;
         try {
             dateDummy =new SimpleDateFormat("dd-MMMM-yyyy").parse(biodata.getTgl_lahir());
@@ -213,8 +222,8 @@ public class TambahDataSqlite extends AppCompatActivity {
                           }
                       });
                   }else {
-                      mDb.biodataDao().insertAll(generateObjectData());
 
+                      mDb.biodataDao().insertAll(generateObjectData());
                       String getUserID = mAuth.getCurrentUser().getUid();
                       mDatabase.child("Biodata").child(getUserID).child("Data").child(generateObjectData().getTlp()).setValue(generateObjectData());
 
@@ -256,7 +265,6 @@ public class TambahDataSqlite extends AppCompatActivity {
         }
 
         biodata.setPekerjaan(spnPekerjaan.getSelectedItem().toString());
-
         biodata.setTgl_lahir(tanggal);
         biodata.setAlamat(txtAlamat.getText().toString());
         biodata.setEmail(txtEmail.getText().toString());

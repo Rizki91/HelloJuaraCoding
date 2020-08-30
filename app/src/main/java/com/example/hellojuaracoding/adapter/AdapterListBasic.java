@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -27,6 +28,7 @@ import com.example.hellojuaracoding.ListBiodata;
 import com.example.hellojuaracoding.R;
 import com.example.hellojuaracoding.TambahDataSqlite;
 import com.example.hellojuaracoding.model.Biodata;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +49,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
     private OnItemClickListener mOnItemClickListener;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private  int data;
 
 
     int gambar [] = {R.drawable.ic_about, R.drawable.ic_checklist};
@@ -99,6 +102,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
+
         public OriginalViewHolder(View v) {
             super(v);
 
@@ -109,6 +113,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
             txtPekerjaan = v.findViewById(R.id.txtPekerjaan);
             txtTelepon = v.findViewById(R.id.txtTelepon);
             parentLayout = v.findViewById(R.id.layout_utama);
+
 
 
 
@@ -136,6 +141,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
 
             final Biodata biodata = items.get(position);
 
@@ -149,12 +155,6 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(final View view) {
 
-
-
-//                        mDb.biodataDao().deleteBiodata(items.get(position));
-//                        items.remove(position);
-//                        notifyItemRemoved(position);
-//                        notifyItemRangeRemoved(position, items.size());
                         CharSequence [] menupilih = {"Edit", "Delet"};
                         AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
                         dialog.setTitle("Pilih Aksi");
@@ -164,8 +164,11 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 switch (which) {
                                     case 0:
 
+
+
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("flag",items.get(position).getKey());
+
+                                        bundle.putInt("data", 0);
                                         bundle.putString("nama", items.get(position).getNama());
                                         bundle.putString("jenis_kelamin", items.get(position).getJk());
                                         bundle.putString("pekerjaan", items.get(position).getPekerjaan());
@@ -174,14 +177,10 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                                         bundle.putString("telepon", items.get(position).getTlp());
                                         bundle.putString("email", items.get(position).getEmail());
                                         bundle.putString("catatan", items.get(position).getCatatan());
-
-//                                        bundle.putString("getPrimaryKey", items.get(position).getKey());
-                                        Intent intent = new Intent(view.getContext(), EditData.class);
+                                        Intent intent = new Intent(view.getContext(),EditData.class);
                                         intent.putExtras(bundle);
+//                                        bundle.putString("getPrimaryKey", items.get(position).getKey());
                                         ctx.startActivity(intent);
-//                                        OnEdit(position,ctx);
-
-
 
 
                                         break;
@@ -195,9 +194,6 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                                         notifyItemRemoved(position);
                                         notifyItemRangeRemoved(position, items.size());
 
-
-
-
 //                                                DatabaseReference dbMahasiswa = mDatabase.child("Biodata").child("Data");
 //                                                dbMahasiswa.removeValue();
 
@@ -207,6 +203,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
                         });
                         dialog.create();
                         dialog.show();
+
 
 
                 }
@@ -239,7 +236,7 @@ public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHold
 //    }
 
 //    private  void OnEdit(int position, Context ctx){
-//        ctx.startActivity(new Intent(ctx,EditData.class).putExtra("data", position));
+//        ctx.startActivity(new Intent(ctx,EditData.class).putExtra("data", (Serializable) items.get(position)));
 //        ((Activity)ctx).finish();
 //    }
 

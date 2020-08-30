@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +14,12 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hellojuaracoding.model.Biodata;
@@ -32,16 +35,19 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class TambahData extends AppCompatActivity {
     EditText txtNama;
+    TextView tvDateReselut;
     RadioButton rbPria,rbWanita;
     Spinner spnPekerjaan;
     CalendarView calendarLahir;
     EditText txtAlamat,txtTelepon, txtEmail,txtCatatan;
-    Button btnSimpan, btnBatal;
+    Button btnSimpan, btnBatal,btnTgl;
     String tanggal="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +57,7 @@ public class TambahData extends AppCompatActivity {
         rbPria = findViewById(R.id.rbLaki);
         rbWanita = findViewById(R.id.rbPerempuan);
         spnPekerjaan = findViewById(R.id.spnPekerjaan);
-        calendarLahir = findViewById(R.id.txtCalender);
+//        calendarLahir = findViewById(R.id.txtCalender);
         txtAlamat = findViewById(R.id.txtalamat);
         txtTelepon = findViewById(R.id.txtTelpon);
         txtEmail = findViewById(R.id.txtEmail);
@@ -66,6 +72,7 @@ public class TambahData extends AppCompatActivity {
                 finish();
             }
         });
+
 
 
         calendarLahir.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -213,6 +220,8 @@ public class TambahData extends AppCompatActivity {
         biodata.setPekerjaan(spnPekerjaan.getSelectedItem().toString());
 
         biodata.setTgl_lahir(tanggal);
+        biodata.setTgl_lahir(btnTgl.getText().toString());
+        txtTelepon.setText(biodata.getTlp());
         biodata.setAlamat(txtAlamat.getText().toString());
         biodata.setEmail(txtEmail.getText().toString());
         biodata.setTlp(txtTelepon.getText().toString());

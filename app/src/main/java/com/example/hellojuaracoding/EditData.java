@@ -7,6 +7,7 @@ import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -17,12 +18,15 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hellojuaracoding.model.Biodata;
+import com.example.hellojuaracoding.model.BiodataFirebase;
 import com.example.hellojuaracoding.utility.SharedPrefUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,9 +40,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.text.TextUtils.isEmpty;
@@ -48,14 +54,15 @@ public class EditData extends AppCompatActivity {
     private RadioButton rbPria1, rbWanita1;
     private Spinner spnPekerjaan1;
     private CalendarView calendarLahir1;
+    private TextView tvDateReselut1;
     private EditText txtNama1, txtAlamat1, txtTelepon1, txtEmail1, txtCatatan1;
-    private Button btnSimpan1, btnBatal1;
+    private Button btnSimpan1, btnBatal1,btnTgl1;
     private String tanggal1 = "";
     private AppDatabase mDb;
     private DatabaseReference mDatabase;
     private Biodata biodata;
     private FirebaseAuth mAuth;
-
+    private  int data;
 
 
     @Override
@@ -98,7 +105,10 @@ public class EditData extends AppCompatActivity {
         });
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        data = getIntent().getIntExtra("data", 0);
         getData();
+
 //        mappingData();
         btnSimpan1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,11 +130,13 @@ public class EditData extends AppCompatActivity {
                                     }
                                 });
                             }else {
-                                mDb.biodataDao().updateBiodata(generateObjectData());
-                                String getUserID = mAuth.getCurrentUser().getUid();
-                                mDatabase.child("Biodata").child(getUserID).child("Data").child(generateObjectData().getTlp()).setValue(generateObjectData());
+                                if(data != 10){
+                                    mDb.biodataDao().updateBiodata(generateObjectData());
+                                    String getUserID = mAuth.getCurrentUser().getUid();
+                                    mDatabase.child("Biodata").child(getUserID).child("Data").child(generateObjectData().getTlp()).setValue(generateObjectData());
 
 
+                                }
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -170,6 +182,7 @@ public class EditData extends AppCompatActivity {
 
         biodata.setPekerjaan(spnPekerjaan1.getSelectedItem().toString());
         biodata.setTgl_lahir(tanggal1);
+        biodata.setTgl_lahir(tanggal1);
         biodata.setAlamat(txtAlamat1.getText().toString());
         biodata.setEmail(txtEmail1.getText().toString());
         biodata.setTlp(txtTelepon1.getText().toString());
@@ -181,48 +194,54 @@ public class EditData extends AppCompatActivity {
     }
 
 
-    public Biodata getData() {
+    public void getData() {
 
+//        biodata = (Biodata)getIntent().getSerializableExtra("data");
 
-        txtNama1.setText(getIntent().getStringExtra("nama"));
+        final Bundle bundle = getIntent().getExtras();
+        data = bundle.getInt("data",0);
+        if(data != 10){
 
-        if (getIntent().getStringExtra("jenis_kelamin").equalsIgnoreCase("pria")) {
-            rbPria1.setChecked(true);
-            rbWanita1.setChecked(false);
-        } else if (getIntent().getStringExtra("jenis_kelamin").equalsIgnoreCase("Wanita")) {
-            rbPria1.setChecked(false);
-            rbWanita1.setChecked(true);
+            txtNama1.setText(bundle.getString("nama"));
 
-        } else {
+            if (bundle.getString("jenis_kelamin").equalsIgnoreCase("pria")) {
+                rbPria1.setChecked(true);
+                rbWanita1.setChecked(false);
+            } else if (bundle.getString("jenis_kelamin").equalsIgnoreCase("Wanita")) {
+                rbPria1.setChecked(false);
+                rbWanita1.setChecked(true);
 
-            rbPria1.setChecked(false);
-            rbWanita1.setChecked(false);
-        }
+            } else {
 
-        List<String> lstPekerjaan = Arrays.asList(getResources().getStringArray(R.array.pekerjaan));
-        for (int x = 0; x < lstPekerjaan.size(); x++) {
-
-            if (lstPekerjaan.get(x).equalsIgnoreCase(getIntent().getStringExtra("pekerjaan"))) {
-                spnPekerjaan1.setSelection(x);
+                rbPria1.setChecked(false);
+                rbWanita1.setChecked(false);
             }
 
-        }
+            List<String> lstPekerjaan = Arrays.asList(getResources().getStringArray(R.array.pekerjaan));
+            for (int x = 0; x < lstPekerjaan.size(); x++) {
 
-        Date dateDummy = null;
-        try {
-            dateDummy = new SimpleDateFormat("dd-MMMM-yyyy").parse(getIntent().getStringExtra("tanggal_lahir"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        calendarLahir1.setDate(dateDummy.getTime());
+                if (lstPekerjaan.get(x).equalsIgnoreCase(bundle.getString("pekerjaan"))) {
+                    spnPekerjaan1.setSelection(x);
+                }
 
-        txtAlamat1.setText(getIntent().getStringExtra("alamat"));
-        txtEmail1.setText(getIntent().getStringExtra("email"));
-        txtCatatan1.setText(getIntent().getStringExtra("catatan"));
-        txtTelepon1.setText(getIntent().getStringExtra("telepon"));
+            }
+
+            Date dateDummy = null;
+            try {
+                dateDummy =new SimpleDateFormat("dd-MMMM-yyyy").parse(getIntent().getStringExtra("tanggal_lahir"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            calendarLahir1.setDate(dateDummy.getTime());
+            txtAlamat1.setText(bundle.getString("alamat"));
+            txtEmail1.setText(bundle.getString("email"));
+            txtCatatan1.setText(bundle.getString("catatan"));
+            txtTelepon1.setText(bundle.getString("telepon"));
+       }
+
+//            return biodata;
 
 
-        return biodata;
     }
 
 
@@ -248,36 +267,6 @@ public class EditData extends AppCompatActivity {
     }
 
 
-    private  void   updateBiodata (Biodata biodata ){
-
-
-        String getKey = getIntent().getExtras().getString("getPrimaryKey");
-        String userID = mAuth.getUid();
-        mDatabase.child("Biodata")
-                .child(userID)
-                .child("Data")
-                .child(getKey)
-                .setValue(biodata);
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private void updateData(final Biodata biodata){
-        new AsyncTask<Void, Void, Integer>() {
-            @Override
-            protected Integer doInBackground(Void... voids) {
-                //Menjalankan proses insert data
-                return mDb.biodataDao().updateBiodata(biodata);
-            }
-
-            @Override
-            protected void onPostExecute(Integer status) {
-                //Menandakan bahwa data berhasil disimpan
-                Toast.makeText(EditData.this, "Data Berhasil Diubah", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditData.this, ListBiodata.class));
-                finish();
-            }
-        }.execute();
-    }
 
     public void showErrorDialog(){
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditData.this);
@@ -332,6 +321,8 @@ public class EditData extends AppCompatActivity {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
+
+
 
 
 }
