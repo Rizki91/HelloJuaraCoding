@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DaftarUser"></activity>
+        <activity android:name=".Chatting"></activity>
+        <activity android:name=".chat.ChatRoom" />
+        <activity android:name=".chat.Chat" />
+        <activity android:name=".adapter.MessageAdapter" />
+        <activity android:name=".DaftarUser" />
         <activity android:name=".EditData" />
         <activity android:name=".Testing" />
         <activity android:name=".ListBiodata" />

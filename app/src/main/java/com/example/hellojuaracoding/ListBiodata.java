@@ -149,6 +149,7 @@ public class ListBiodata extends AppCompatActivity implements AdapterListBasic.O
 
                     Biodata bdt = snapshot.getValue(Biodata.class);
 
+
                     bdt.setTlp(snapshot.getKey());
                     biodata.add(bdt);
                 }

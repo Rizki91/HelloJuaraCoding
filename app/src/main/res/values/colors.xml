@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="backgroundhitam">#DF2121</color>
+
+    <color name="chat1">#8BC34A</color>
+    <color name="chat2">#03A9F4</color>
 </resources>

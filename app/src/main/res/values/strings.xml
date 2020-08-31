@@ -25,5 +25,6 @@
     <string name="daftar">Daftar</string>
     <string name="hapus">Hapus</string>
     <string name="edit">Edit</string>
+    <string name="chat">Chat</string>
 
 </resources>

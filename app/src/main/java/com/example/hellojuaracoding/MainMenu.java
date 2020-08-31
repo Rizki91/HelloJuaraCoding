@@ -57,6 +57,12 @@ public class MainMenu extends AppCompatActivity {
         startActivity(in);
 
     }
+
+    public  void chat(View view){
+        Intent intent = new Intent(MainMenu.this, Chatting.class);
+        startActivity(intent);
+    }
+
     public void screenListData(View view) {
         Intent intent = new Intent(MainMenu.this, ListBiodata.class);
         startActivity(intent);

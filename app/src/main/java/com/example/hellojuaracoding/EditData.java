@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hellojuaracoding.model.Biodata;
-import com.example.hellojuaracoding.model.BiodataFirebase;
 import com.example.hellojuaracoding.utility.SharedPrefUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
