@@ -318,7 +318,7 @@ public class TambahDataSqlite extends AppCompatActivity {
     public void showJsonDialog(){
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(TambahDataSqlite.this);
         alertDialog.setTitle("Sukses");
-        alertDialog.setMessage("Data Tersimpan").setIcon(R.drawable.ic_about).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setMessage("Data Tersimpan").setIcon(R.drawable.ic_tick).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

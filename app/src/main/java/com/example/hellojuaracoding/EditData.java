@@ -79,6 +79,7 @@ public class EditData extends AppCompatActivity {
         txtEmail1 = findViewById(R.id.txtEmailBaru);
         txtCatatan1 = findViewById(R.id.txtCatatanBaru);
 
+
         btnBatal1 = findViewById(R.id.btnBatalBaru);
         btnSimpan1 = findViewById(R.id.btnSimpanBaru);
 
@@ -226,13 +227,15 @@ public class EditData extends AppCompatActivity {
 
             }
 
+            tanggal1 = bundle.getString("tanggal_lahir");
             Date dateDummy = null;
             try {
-                dateDummy =new SimpleDateFormat("dd-MMMM-yyyy").parse(getIntent().getStringExtra("tanggal_lahir"));
+                dateDummy =new SimpleDateFormat("dd-MMMM-yyyy").parse(tanggal1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             calendarLahir1.setDate(dateDummy.getTime());
+
             txtAlamat1.setText(bundle.getString("alamat"));
             txtEmail1.setText(bundle.getString("email"));
             txtCatatan1.setText(bundle.getString("catatan"));
@@ -309,7 +312,7 @@ public class EditData extends AppCompatActivity {
     public void showJsonDialog(){
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditData.this);
         alertDialog.setTitle("Sukses");
-        alertDialog.setMessage("Data Diperbarui").setIcon(R.drawable.ic_about).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setMessage("Data Diperbarui").setIcon(R.drawable.ic_tick).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
