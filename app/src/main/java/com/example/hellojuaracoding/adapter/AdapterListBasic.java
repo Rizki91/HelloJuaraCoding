@@ -1,21 +1,15 @@
 package com.example.hellojuaracoding.adapter;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -26,20 +20,14 @@ import com.example.hellojuaracoding.AppDatabase;
 import com.example.hellojuaracoding.EditData;
 import com.example.hellojuaracoding.ListBiodata;
 import com.example.hellojuaracoding.R;
-import com.example.hellojuaracoding.TambahDataSqlite;
 import com.example.hellojuaracoding.model.Biodata;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+
 public class AdapterListBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<Biodata> items;

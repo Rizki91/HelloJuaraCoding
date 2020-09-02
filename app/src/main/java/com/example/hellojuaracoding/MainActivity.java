@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     Snackbar snackbar;
+    private FirebaseAuth.AuthStateListener authListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,5 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
+
+
+
+
 

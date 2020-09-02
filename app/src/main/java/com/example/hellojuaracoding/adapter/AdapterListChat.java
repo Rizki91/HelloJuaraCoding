@@ -1,97 +1,104 @@
 package com.example.hellojuaracoding.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hellojuaracoding.model.AllMethods;
 import com.example.hellojuaracoding.model.ChatModel;
 import com.example.hellojuaracoding.R;
-import com.example.hellojuaracoding.model.Biodata;
-import com.example.hellojuaracoding.model.ChatModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterListChat extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterListChat extends  RecyclerView.Adapter<AdapterListChat.AdapterListChatViewHolder> {
 
-    private List<ChatModel> items = new ArrayList<>();
+    Context context;
+    List<ChatModel> chatModel;
+    DatabaseReference mDatabase;
 
-    private Context ctx;
-    private OnItemClickListener mOnItemClickListener;
-      int[] gabar = {R.drawable.bg_chat1,R.drawable.bg_chat2};
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, ChatModel obj, int position);
+    public AdapterListChat (Context context,List<ChatModel>chatModel,DatabaseReference mDatabase){
+        this.context= context;
+        this.chatModel = chatModel;
+        this.mDatabase = mDatabase;
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
-        this.mOnItemClickListener = mItemClickListener;
-    }
 
-    public AdapterListChat(Context context, List<ChatModel> items) {
-        this.items = items;
-        ctx = context;
-    }
-
-    public class OriginalViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView txtNama;
-        public TextView txtPesan;
-        public TextView txtTimestamp;
-        public LinearLayout Gambar;
-
-
-
-
-        public OriginalViewHolder(View v) {
-            super(v);
-
-            txtNama = v.findViewById(R.id.txtNama);
-            txtPesan = v.findViewById(R.id.txtPesan);
-            txtTimestamp = v.findViewById(R.id.txtTimestamp);
-            Gambar = v.findViewById(R.id.linerLayt);
-
-
-        }
-    }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder vh;
+    public AdapterListChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemchat, parent, false);
-        vh = new OriginalViewHolder(v);
-        return vh;
+        return new AdapterListChatViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof OriginalViewHolder) {
-            OriginalViewHolder view = (OriginalViewHolder) holder;
+    public void onBindViewHolder(AdapterListChatViewHolder holder, int position) {
 
-            ChatModel chatmodel = items.get(position);
-            if(position % 2 == 0){
-                view.Gambar.setBackgroundResource(R.drawable.bg_chat1);
-            }else{
-                view.Gambar.setBackgroundResource(R.drawable.bg_chat2);
-            }
-            view.txtNama.setText(chatmodel.getNama() + " : ");
-            view.txtPesan.setText(chatmodel.getPesan());
-            view.txtTimestamp.setText(chatmodel.getTanggal());
+        ChatModel chat = chatModel.get(position);
+
+        if(chat.getNama().equals(AllMethods.nama)){
+
+            holder.linerLayt.setBackgroundResource(R.drawable.bg_chat1);
+            holder.tvtTitel.setText("You : " + chat.getPesan() );
+            holder.tvtTitel.setGravity(Gravity.START);
+            holder.txtTimestamp.setText(chat.getTanggal());
+            
+
+        }else {
+            holder.tvtTitel.setText(chat.getNama() + ":" +chat.getPesan());
+            holder.linerLayt.setBackgroundResource(R.drawable.bg_chat2);
+            holder.txtTimestamp.setText(chat.getTanggal());
+            holder.btn_hapus.setVisibility(View.GONE);
 
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+
+
+
+        return chatModel.size();
     }
 
+
+
+
+    public class AdapterListChatViewHolder extends  RecyclerView.ViewHolder {
+
+        TextView tvtTitel;
+        TextView txtTimestamp;
+        ImageButton btn_hapus;
+        LinearLayout linerLayt;
+        public AdapterListChatViewHolder(View itemView) {
+            super(itemView);
+            tvtTitel= (TextView) itemView.findViewById(R.id.txtPesan);
+            txtTimestamp = (TextView) itemView.findViewById(R.id.txtTimestamp);
+            btn_hapus = (ImageButton) itemView.findViewById(R.id.btn_Hapus);
+            linerLayt = (LinearLayout) itemView.findViewById(R.id.linerLayt);
+
+            btn_hapus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDatabase.child(chatModel.get(getAdapterPosition()).getKey()).setValue(null);
+                }
+            });
+        }
+    }
 }

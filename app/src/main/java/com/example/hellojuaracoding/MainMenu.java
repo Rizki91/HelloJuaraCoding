@@ -51,7 +51,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-
     public  void tambah (View view){
         Intent in = new Intent(MainMenu.this,TambahDataSqlite .class);
         startActivity(in);
@@ -67,8 +66,6 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = new Intent(MainMenu.this, ListBiodata.class);
         startActivity(intent);
     }
-
-
 
 
 }

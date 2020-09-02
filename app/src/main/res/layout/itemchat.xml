@@ -33,32 +33,36 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtNama"
-                        android:textColor="#FFF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nama : " />
-
-                    <TextView
                         android:id="@+id/txtPesan"
-                        android:layout_width="match_parent"
+                        android:layout_width="257dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:textColor="#FFF"
                         android:gravity="start|top"
                         android:inputType="textMultiLine"
                         android:maxLines="5"
-                        android:text="Hello Apa Kabar" />
+                        android:text="Hello Apa Kabar"
+                        android:textColor="#FFF" />
+
+                    <ImageButton
+                        android:id="@+id/btn_Hapus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_hapus"
+                        app:srcCompat="@drawable/ic_close" />
+
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/txtTimestamp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="30/08/2020"
                     android:textAlignment="viewEnd"
                     android:textColor="#FFF" />
+
             </LinearLayout>
 
 
